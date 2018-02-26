@@ -9,14 +9,14 @@ from PIL import Image
 from util import get_filenames
 from dehaze import dehaze
 
-SP_IDX = (5, 6, 8, 12)  # for testing parameters
+# SP_IDX = (5, 6, 8, 12)  # for testing parameters
 SP_PARAMS = ({'tmin': 0.2, 'Amax': 170, 'w': 15, 'r': 40},
              {'tmin': 0.5, 'Amax': 190, 'w': 15, 'r': 40},
              {'tmin': 0.5, 'Amax': 220, 'w': 15, 'r': 40})
 
 
 def generate_results(src, dest, generator):
-    print 'processing', src + '...'
+    print('processing', src + '...')
     im = Image.open(src)
     dark, rawt, refinedt, rawrad, rerad = generator(im)
     dark.save(dest % 'dark')
@@ -24,7 +24,7 @@ def generate_results(src, dest, generator):
     refinedt.save(dest % 'refinedt')
     rawrad.save(dest % 'radiance-rawt')
     rerad.save(dest % 'radiance-refinedt')
-    print 'saved', dest
+    print('saved', dest)
 
 
 def main():
@@ -52,7 +52,7 @@ def main():
         generate_results(src, dest, partial(dehaze, tmin=args.tmin, Amax=args.Amax,
                                            w=args.window, r=args.radius))
     else:
-        for idx in SP_IDX:
+        for idx in range(len(filenames)):
             src, dest = filenames[idx]
             for param in SP_PARAMS:
                 newdest = dest.replace("%s",

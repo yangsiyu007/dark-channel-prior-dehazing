@@ -67,13 +67,13 @@ def guided_filter(I, p, r=40, eps=1e-3):
     base = boxfilter(np.ones((M, N)), r)
 
     # each channel of I filtered with the mean filter
-    means = [boxfilter(I[:, :, i], r) / base for i in xrange(3)]
+    means = [boxfilter(I[:, :, i], r) / base for i in range(3)]
     # p filtered with the mean filter
     mean_p = boxfilter(p, r) / base
     # filter I with p then filter it with the mean filter
-    means_IP = [boxfilter(I[:, :, i] * p, r) / base for i in xrange(3)]
+    means_IP = [boxfilter(I[:, :, i] * p, r) / base for i in range(3)]
     # covariance of (I, p) in each local patch
-    covIP = [means_IP[i] - means[i] * mean_p for i in xrange(3)]
+    covIP = [means_IP[i] - means[i] * mean_p for i in range(3)]
 
     # variance of I in each local patch: the matrix Sigma in ECCV10 eq.14
     var = defaultdict(dict)
